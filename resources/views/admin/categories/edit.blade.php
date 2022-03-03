@@ -35,7 +35,7 @@
                 </p>
             </div>
             <div>
-                <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
+                <input dusk="categoryEditSave" class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
             </div>
         </form>
 

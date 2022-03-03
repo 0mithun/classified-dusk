@@ -7,6 +7,8 @@ use App\User;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\Browser\Pages\Cities\Index;
+use Tests\Browser\Pages\Cities\Show;
 
 class CityTest extends DuskTestCase
 {
@@ -26,8 +28,8 @@ class CityTest extends DuskTestCase
 
         $this->browse(function(Browser $browser) use($user, $cities){
             $browser->loginAs($user)
-                ->visit('/admin/cities')
-                ->assertSee($cities->random()->name)
+                ->visit(new Index)
+                ->assertSeeCities($cities)
                 ->logout()
                 ;
         });
@@ -42,9 +44,10 @@ class CityTest extends DuskTestCase
 
         $this->browse(function(Browser $browser) use($user, $city){
             $browser->loginAs($user)
-                ->visit('/admin/cities/'.$city->id)
-                ->assertSee($city->name)
-                ->assertSee($city->id)
+                ->visit(new Index)
+                ->pressViewButton($city->id)
+                ->on(new Show($city->id))
+                ->assertSeeCityDetails($city)
                 ->logout()
                 ;
         });
